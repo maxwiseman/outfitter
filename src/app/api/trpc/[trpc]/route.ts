@@ -18,7 +18,8 @@ const createContext = async (
   });
 };
 
-const handler = (req: NextRequest): unknown =>
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type -- This has a really annoying type and it doesn't really matter
+const handler = (req: NextRequest) =>
   fetchRequestHandler({
     endpoint: "/api/trpc",
     req,
