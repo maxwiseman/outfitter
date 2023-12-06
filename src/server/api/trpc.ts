@@ -22,7 +22,10 @@ import { ZodError } from "zod";
  *
  * @see https://trpc.io/docs/server/context
  */
-export const createTRPCContext = async (opts: { headers: Headers }) => {
+export const createTRPCContext = async (opts: {
+  headers: Headers;
+  // eslint-disable-next-line @typescript-eslint/require-await -- I dunno why it's like this but it is
+}): Promise<{ headers: Headers }> => {
   return {
     ...opts,
   };
