@@ -1,9 +1,8 @@
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
-
-import { cn } from "@/components/lib/utils";
 import { IconLoader } from "@tabler/icons-react";
+import { cn } from "@/components/lib/utils";
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:border disabled:border-input disabled:bg-secondary disabled:text-muted-foreground disabled:opacity-50",
@@ -51,8 +50,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const Comp = asChild ? Slot : "button";
     return (
       <Comp
-        disabled={props.disabled ?? props.loading}
         className={cn(buttonVariants({ variant, size, className }))}
+        disabled={props.disabled ?? props.loading}
         ref={ref}
         {...props}
       >
@@ -64,7 +63,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         >
           <IconLoader className={cn("h-4 w-4 animate-spin")} />
         </div>
-        {props.icon && (
+        {props.icon ? (
           <div
             className={cn(
               "overflow-hidden transition-[width]",
@@ -73,7 +72,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           >
             {!props.loading && StyledIcon}
           </div>
-        )}
+        ) : null}
         {props.children}
       </Comp>
     );
