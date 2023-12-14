@@ -8,7 +8,7 @@ export const openWeatherMapRouter = createTRPCRouter({
     .query(async ({ input }) => {
       if (input) {
         const weatherData = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${input.latitude}&lon=${input.longitude}&appid=${env.OPENWEATHERMAP_API_KEY}`,
+          `https://api.openweathermap.org/data/2.5/weather?lat=${input.latitude}&lon=${input.longitude}&units=imperial&appid=${env.OPENWEATHERMAP_API_KEY}`,
         ).then((res) => res.json() as unknown as WeatherAPIResponse);
         return weatherData;
       }
@@ -19,7 +19,7 @@ export const openWeatherMapRouter = createTRPCRouter({
     .query(async ({ input }) => {
       if (input) {
         const weatherData = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?q=${input}&appid=${env.OPENWEATHERMAP_API_KEY}`,
+          `https://api.openweathermap.org/data/2.5/weather?q=${input}&units=imperial&appid=${env.OPENWEATHERMAP_API_KEY}`,
         ).then((res) => res.json() as unknown as WeatherAPIResponse);
         return weatherData;
       }
