@@ -1,4 +1,5 @@
-import { weatherRouter } from "./routers/accuweather";
+import { accuWeatherRouter } from "./routers/accuweather";
+import { openWeatherMapRouter } from "./routers/openweathermap";
 import { createTRPCRouter } from "@/server/api/trpc";
 
 /**
@@ -8,7 +9,8 @@ import { createTRPCRouter } from "@/server/api/trpc";
  */
 export const appRouter = createTRPCRouter({
   // post: postRouter,
-  weather: weatherRouter,
+  accuWeather: accuWeatherRouter,
+  openWeatherMap: openWeatherMapRouter,
 });
 
 // export type definition of API

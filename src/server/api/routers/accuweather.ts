@@ -2,7 +2,7 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import { env } from "@/env";
 
-export const weatherRouter = createTRPCRouter({
+export const accuWeatherRouter = createTRPCRouter({
   getByCoords: publicProcedure
     .input(z.object({ latitude: z.number(), longitude: z.number() }).optional())
     .query(async ({ input }) => {
@@ -11,7 +11,7 @@ export const weatherRouter = createTRPCRouter({
           `http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${env.ACCUWEATHER_API_KEY}&q=${input.latitude},${input.longitude}`,
         ).then((res) => res.json() as unknown as LocationAPIResponse);
         if (!locationData[0]) {
-          console.log(locationData);
+          console.error("Couldn't retreive location data!", locationData);
           return "Error fetching location data!";
         }
         const weatherData = await fetch(

@@ -24,7 +24,7 @@ export default function Page(): React.ReactElement {
   const [location, setLocation] = useState<GeolocationPosition>();
   const [searchQuery, setSearchQuery] = useState<string>("");
 
-  const coordsFetcher = api.weather.getByCoords.useQuery(
+  const coordsFetcher = api.openWeatherMap.getByCoords.useQuery(
     location
       ? {
           latitude: location.coords.latitude,
@@ -33,7 +33,7 @@ export default function Page(): React.ReactElement {
       : undefined,
     { refetchOnWindowFocus: false },
   );
-  const textFetcher = api.weather.getByText.useQuery(searchQuery, {
+  const textFetcher = api.openWeatherMap.getByText.useQuery(searchQuery, {
     refetchOnWindowFocus: false,
   });
 
