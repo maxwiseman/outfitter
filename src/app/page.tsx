@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
@@ -53,14 +53,25 @@ export default function Page(): React.ReactElement {
   function onSubmit(values: z.infer<typeof formSchema>): void {
     setLoading(true);
     if (values.useCurrentLocation) {
-      navigator.geolocation.getCurrentPosition((newLocation) => {
-        setLocation(newLocation);
-      });
+      if (!location)
+        navigator.geolocation.getCurrentPosition(
+          (newLocation) => {
+            setLocation(newLocation);
+          },
+          null,
+          { enableHighAccuracy: false, maximumAge: Infinity, timeout: 5000 },
+        );
     } else {
       setSearchQuery(values.location);
       setLoading(false);
     }
   }
+
+  useEffect(() => {
+    if (!coordsFetcher.isLoading && !textFetcher.isLoading) {
+      setLoading(false);
+    }
+  }, [textFetcher.isLoading, coordsFetcher.isLoading]);
 
   return (
     <main className="flex h-full flex-col items-center justify-center">

@@ -11,7 +11,8 @@ export const weatherRouter = createTRPCRouter({
           `http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${env.ACCUWEATHER_API_KEY}&q=${input.latitude},${input.longitude}`,
         ).then((res) => res.json() as unknown as LocationAPIResponse);
         if (!locationData[0]) {
-          return;
+          console.log(locationData);
+          return "Error fetching location data!";
         }
         const weatherData = await fetch(
           `http://dataservice.accuweather.com/currentconditions/v1/${locationData[0].Key}?apikey=${env.ACCUWEATHER_API_KEY}`,
@@ -28,7 +29,7 @@ export const weatherRouter = createTRPCRouter({
           `http://dataservice.accuweather.com/locations/v1/search?apikey=${env.ACCUWEATHER_API_KEY}&q=${input}`,
         ).then((res) => res.json() as unknown as LocationAPIResponse);
         if (!locationData[0]) {
-          return;
+          return "Error fetching location data!";
         }
         const weatherData = await fetch(
           `http://dataservice.accuweather.com/currentconditions/v1/${locationData[0].Key}?apikey=${env.ACCUWEATHER_API_KEY}`,
