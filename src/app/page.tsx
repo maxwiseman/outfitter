@@ -53,20 +53,30 @@ export default function Page(): React.ReactElement {
   function getLocationByIp(): void {
     fetch("/api/location")
       .then((res) => res.json())
-      .then((res: GeolocationCoordinates) => {
-        setLocation({
-          coords: {
-            latitude: res.latitude || 0,
-            longitude: res.longitude || 0,
-            accuracy: res.accuracy || 0,
-            altitude: res.altitude || 0,
-            altitudeAccuracy: res.altitudeAccuracy || 0,
-            heading: res.heading || 0,
-            speed: res.speed || 0,
-          },
-          timestamp: 0,
-        });
-      })
+      .then(
+        (res: {
+          latitude: string;
+          longitude: string;
+          accuracy: string;
+          altitude: string;
+          altitudeAccuracy: string;
+          heading: string;
+          speed: string;
+        }) => {
+          setLocation({
+            coords: {
+              latitude: parseInt(res.latitude) || 0,
+              longitude: parseInt(res.longitude) || 0,
+              accuracy: parseInt(res.accuracy) || 0,
+              altitude: parseInt(res.altitude) || 0,
+              altitudeAccuracy: parseInt(res.altitudeAccuracy) || 0,
+              heading: parseInt(res.heading) || 0,
+              speed: parseInt(res.speed) || 0,
+            },
+            timestamp: 0,
+          });
+        },
+      )
       .catch(() => {
         console.error("Error fetching location by IP");
       });
