@@ -50,6 +50,28 @@ export default function Page(): React.ReactElement {
     },
   });
 
+  function getLocationByIp(): void {
+    fetch("/api/location")
+      .then((res) => res.json())
+      .then((res: GeolocationCoordinates) => {
+        setLocation({
+          coords: {
+            latitude: res.latitude || 0,
+            longitude: res.longitude || 0,
+            accuracy: res.accuracy || 0,
+            altitude: res.altitude || 0,
+            altitudeAccuracy: res.altitudeAccuracy || 0,
+            heading: res.heading || 0,
+            speed: res.speed || 0,
+          },
+          timestamp: 0,
+        });
+      })
+      .catch(() => {
+        console.error("Error fetching location by IP");
+      });
+  }
+
   function onSubmit(values: z.infer<typeof formSchema>): void {
     setLoading(true);
     if (values.useCurrentLocation) {
@@ -58,12 +80,12 @@ export default function Page(): React.ReactElement {
           (newLocation) => {
             setLocation(newLocation);
           },
-          null,
+          // TODO: This shouldn't really be null, we should probably throw a toast or something on the screen
+          getLocationByIp,
           { enableHighAccuracy: false, maximumAge: Infinity, timeout: 5000 },
         );
     } else {
       setSearchQuery(values.location);
-      setLoading(false);
     }
   }
 
