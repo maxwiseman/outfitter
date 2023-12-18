@@ -3,6 +3,9 @@ import "@/styles/globals.css";
 import { Inter } from "next/font/google";
 import { cookies } from "next/headers";
 import { TRPCReactProvider } from "@/trpc/react";
+import { ThemeProvider } from "./theme-provider";
+import { Footer } from "./footer";
+import { Separator } from "@/components/ui/separator";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -23,9 +26,13 @@ export default function RootLayout({
   return (
     <html className="h-full" lang="en">
       <body className={`h-full font-sans ${inter.className}`}>
-        <TRPCReactProvider cookies={cookies().toString()}>
-          {children}
-        </TRPCReactProvider>
+        <ThemeProvider>
+          <TRPCReactProvider cookies={cookies().toString()}>
+            {children}
+            <Separator />
+            <Footer />
+          </TRPCReactProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
