@@ -2,9 +2,9 @@ import "@/styles/globals.css";
 
 import { Inter } from "next/font/google";
 import { cookies } from "next/headers";
-import { TRPCReactProvider } from "@/trpc/react";
 import { ThemeProvider } from "./theme-provider";
 import { Footer } from "./footer";
+import { TRPCReactProvider } from "@/trpc/react";
 import { Separator } from "@/components/ui/separator";
 
 const inter = Inter({
