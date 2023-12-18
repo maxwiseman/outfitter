@@ -27,7 +27,12 @@ export const openWeatherMapRouter = createTRPCRouter({
     }),
 });
 
-interface WeatherAPIResponse {
+export interface WeatherAPIResponseError {
+  cod: number;
+  message: string;
+}
+
+export interface WeatherAPIResponse {
   coord: {
     lon: number;
     lat: number;
@@ -67,4 +72,5 @@ interface WeatherAPIResponse {
   id: number;
   name: string;
   cod: number;
+  message?: string;
 }
